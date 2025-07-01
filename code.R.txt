@@ -1,0 +1,29 @@
+head(Salary_dataset)
+model=lm(Salary~YearsExperience,data=Salary_dataset)
+plot(model)
+plot(model)
+ggplot(Salary_dataset,aes(YearsExperience,Salary))+
+  geom_point(size=4,alpha=0.5)+
+  geom_smooth(method=lm,se=F)+
+  theme_bw()+
+  labs(title = "Salry explined by YearsExperience",
+       x="YearsExperience(independent variables)",
+       y="Salry(dependet variable)")
+model=lm(Salary~YearsExperience,data=Salary_dataset)
+summary(model)
+new_data=data.frame(YearsExperience=c(0,2,4,8,15))
+round(predict(model,new_data))
+Salary_dataset%>%
++   mutate(fitted = fitted(model)) %>%
++   mutate(residuals = residuals(model)) %>%
++   ggplot(aes(fitted, residuals))+
++   geom_point()+
++   geom_hline(yintercept = 0, color = "red", linetype = "dashed") + # horizontal line at
++   theme_bw() +
++   labs(title = "Residuals vs Fitted Values",
++        x = "Fitted values",
++        y = "Residuals")
+harvtest(model)
+shapiro.test(residuals(model))
+bptest(model)
+
